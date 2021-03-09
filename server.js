@@ -8,6 +8,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const { body, check, validationResult } = require('express-validator');
 const sanitizer = require('sanitize');
+const axios = require('axios');
 
 const options = {
   swaggerDefinition: {
@@ -52,6 +53,15 @@ pool.getConnection((err, conn) => {
 });
 
 // EXPRESS ENDPOINTS BELOW
+
+app.get("/say/:keyword", (req, res) => {
+	key = req.params.keyword;  
+	//console.log("Sidney Henderson says:" + key);
+axios.get('https://iljognyf62.execute-api.us-east-2.amazonaws.com/prod/say/?keyword=' + key)
+    .then(response => {
+res.send("Sidney Henderson says: " + response.data );
+    });
+});
 
 /**
  * @swagger
